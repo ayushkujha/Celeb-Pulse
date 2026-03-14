@@ -22,13 +22,17 @@ CREATE TABLE celebrities (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   slug        TEXT UNIQUE NOT NULL,
   name        TEXT NOT NULL,
+  birth_year  INT,
   emoji       TEXT,
   tags        TEXT[],
   vibe_score  DECIMAL(3,1),
   sun_sign    TEXT,
   moon_sign   TEXT,
   rising_sign TEXT,
-  created_at  TIMESTAMPTZ DEFAULT now()
+  image_url     TEXT,
+  instagram_url TEXT,
+  twitter_url   TEXT,
+  created_at    TIMESTAMPTZ DEFAULT now()
 );
 
 -- Era tracking
@@ -107,6 +111,8 @@ CREATE TABLE shop_items (
   price         TEXT,
   emoji         TEXT,
   gradient      TEXT,
+  image_url     TEXT,
+  product_url   TEXT,
   sort_order    INT DEFAULT 0
 );
 
@@ -122,9 +128,9 @@ DECLARE
   billie_id UUID := gen_random_uuid();
 BEGIN
 
-  -- A. SABRINA CARPENTER
-  INSERT INTO celebrities (id, slug, name, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign)
-  VALUES (sabrina_id, 'sabrina-carpenter', 'Sabrina Carpenter', '💋', ARRAY['Pop Princess', 'Nonsense Queen'], 9.4, 'Taurus', 'Leo', 'Pisces');
+  -- A. SABRINA CARPENTER (Met Gala attendee)
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (sabrina_id, 'sabrina-carpenter', 'Sabrina Carpenter', 1999, '💋', ARRAY['Pop Princess', 'Met Gala', 'Nonsense Queen'], 9.4, 'Taurus', 'Leo', 'Pisces', 'https://picsum.photos/seed/sabrina-carpenter/400/600', 'https://www.instagram.com/sabrinacarpenter/', 'https://twitter.com/SabrinaCarpenter');
 
   INSERT INTO eras (celebrity_id, name, description, progress, is_current)
   VALUES (sabrina_id, 'SHORT N'' SWEET', 'Espresso dominance, Polly Pocket vibes, and unhinged outro lyrics. The world is her stage and we are just living in it.', 78, true);
@@ -153,16 +159,16 @@ BEGIN
   (sabrina_id, 'LABOR PRACTICES', '👷', 'Dancers and crew report excellent working conditions. Known for paying above union rates.', 92, 2),
   (sabrina_id, 'PHILANTHROPY', '💎', 'Quiet donations to women''s shelters. Performed charity sets for children''s hospitals.', 78, 3);
 
-  INSERT INTO shop_items (celebrity_id, name, price, emoji, gradient, sort_order) VALUES
-  (sabrina_id, 'Vintage Platform Boots', '$120.00', '👢', 'linear-gradient(135deg, #2a1b38, #1a0b2e)', 1),
-  (sabrina_id, 'Espresso Lip Gloss', '$22.00', '💄', 'linear-gradient(135deg, #3a1528, #2a0518)', 2),
-  (sabrina_id, 'Heart Cutout Corset', '$68.00', '🎀', 'linear-gradient(135deg, #152a28, #051a18)', 3),
-  (sabrina_id, 'Pleated Micro Skirt', '$45.00', '👗', 'linear-gradient(135deg, #2a2815, #1a1805)', 4);
+  INSERT INTO shop_items (celebrity_id, name, price, emoji, gradient, image_url, product_url, sort_order) VALUES
+  (sabrina_id, 'Vintage Platform Boots', '$120.00', '👢', 'linear-gradient(135deg, #2a1b38, #1a0b2e)', 'https://picsum.photos/seed/sabrina-boots/300/300', 'https://www.drmartens.com/', 1),
+  (sabrina_id, 'Espresso Lip Gloss', '$22.00', '💄', 'linear-gradient(135deg, #3a1528, #2a0518)', 'https://picsum.photos/seed/sabrina-gloss/300/300', 'https://www.glossier.com/', 2),
+  (sabrina_id, 'Heart Cutout Corset', '$68.00', '🎀', 'linear-gradient(135deg, #152a28, #051a18)', 'https://picsum.photos/seed/sabrina-corset/300/300', 'https://www.asos.com/', 3),
+  (sabrina_id, 'Pleated Micro Skirt', '$45.00', '👗', 'linear-gradient(135deg, #2a2815, #1a1805)', 'https://picsum.photos/seed/sabrina-skirt/300/300', 'https://www.zara.com/', 4);
 
 
-  -- B. ZENDAYA
-  INSERT INTO celebrities (id, slug, name, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign)
-  VALUES (zendaya_id, 'zendaya', 'Zendaya', '👑', ARRAY['Actress', 'Fashion Icon'], 9.8, 'Virgo', 'Aquarius', 'Aquarius');
+  -- B. ZENDAYA (Met Gala co-chair 2024)
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (zendaya_id, 'zendaya', 'Zendaya', 1996, '👑', ARRAY['Actress', 'Fashion Icon', 'Met Gala'], 9.8, 'Virgo', 'Aquarius', 'Aquarius', 'https://picsum.photos/seed/zendaya/400/600', 'https://www.instagram.com/zendaya/', 'https://twitter.com/Zendaya');
 
   INSERT INTO eras (celebrity_id, name, description, progress, is_current)
   VALUES (zendaya_id, 'FASHION GODDESS', 'Met Gala domination, Valentino muse, every red carpet is her runway. Effortlessly iconic.', 85, true);
@@ -190,14 +196,14 @@ BEGIN
   (zendaya_id, 'LABOR PRACTICES', '👷', 'Known for ensuring diverse hiring on sets and advocating for equal pay.', 95, 2),
   (zendaya_id, 'PHILANTHROPY', '💎', 'Supports numerous educational and racial justice initiatives.', 90, 3);
 
-  INSERT INTO shop_items (celebrity_id, name, price, emoji, gradient, sort_order) VALUES
-  (zendaya_id, 'Vintage Archive Dress', '$4,500.00', '👗', 'linear-gradient(135deg, #2a1b38, #1a0b2e)', 1),
-  (zendaya_id, 'Bulgari Necklace', 'Price Upon Request', '💎', 'linear-gradient(135deg, #152a28, #051a18)', 2);
+  INSERT INTO shop_items (celebrity_id, name, price, emoji, gradient, image_url, product_url, sort_order) VALUES
+  (zendaya_id, 'Vintage Archive Dress', '$4,500.00', '👗', 'linear-gradient(135deg, #2a1b38, #1a0b2e)', 'https://picsum.photos/seed/zendaya-dress/300/300', 'https://www.valentino.com/', 1),
+  (zendaya_id, 'Bulgari Necklace', 'Price Upon Request', '💎', 'linear-gradient(135deg, #152a28, #051a18)', 'https://picsum.photos/seed/zendaya-necklace/300/300', 'https://www.bulgari.com/', 2);
 
 
-  -- C. TIMOTHÉE CHALAMET
-  INSERT INTO celebrities (id, slug, name, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign)
-  VALUES (timothee_id, 'timothee-chalamet', 'Timothée Chalamet', '🍑', ARRAY['Actor', 'Heartthrob'], 8.9, 'Capricorn', 'Pisces', 'Virgo');
+  -- C. TIMOTHÉE CHALAMET (Met Gala co-chair 2021)
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (timothee_id, 'timothee-chalamet', 'Timothée Chalamet', 1995, '🍑', ARRAY['Actor', 'Heartthrob', 'Met Gala'], 8.9, 'Capricorn', 'Pisces', 'Virgo', 'https://picsum.photos/seed/timothee-chalamet/400/600', 'https://www.instagram.com/timotheechalamet/', 'https://twitter.com/RealChalamet');
 
   INSERT INTO eras (celebrity_id, name, description, progress, is_current)
   VALUES (timothee_id, 'BLOCKBUSTER BOY', 'Transitioning from indie darling to leading man of billion-dollar franchises. He is the Lisan al Gaib.', 65, true);
@@ -222,14 +228,14 @@ BEGIN
   (timothee_id, 'CLIMATE IMPACT', '🌍', 'Average footprint for an actor his size; takes commercial flights occasionally.', 60, 1),
   (timothee_id, 'LABOR PRACTICES', '👷', 'No negative reports, standard industry practices.', 75, 2);
 
-  INSERT INTO shop_items (celebrity_id, name, price, emoji, gradient, sort_order) VALUES
-  (timothee_id, 'Harness (Custom)', '$1,200.00', '🦺', 'linear-gradient(135deg, #3a1528, #2a0518)', 1),
-  (timothee_id, 'Messy Curls Gel', '$28.00', '🧴', 'linear-gradient(135deg, #152a28, #051a18)', 2);
+  INSERT INTO shop_items (celebrity_id, name, price, emoji, gradient, image_url, product_url, sort_order) VALUES
+  (timothee_id, 'Harness (Custom)', '$1,200.00', '🦺', 'linear-gradient(135deg, #3a1528, #2a0518)', 'https://picsum.photos/seed/timothee-harness/300/300', 'https://www.gucci.com/', 1),
+  (timothee_id, 'Messy Curls Gel', '$28.00', '🧴', 'linear-gradient(135deg, #152a28, #051a18)', 'https://picsum.photos/seed/timothee-gel/300/300', 'https://www.sephora.com/', 2);
 
 
-  -- D. BILLIE EILISH
-  INSERT INTO celebrities (id, slug, name, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign)
-  VALUES (billie_id, 'billie-eilish', 'Billie Eilish', '🕷️', ARRAY['Singer', 'Oscar Winner'], 9.6, 'Sagittarius', 'Aquarius', 'Pisces');
+  -- D. BILLIE EILISH (Met Gala co-chair 2021)
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (billie_id, 'billie-eilish', 'Billie Eilish', 2001, '🕷️', ARRAY['Singer', 'Oscar Winner', 'Met Gala'], 9.6, 'Sagittarius', 'Aquarius', 'Pisces', 'https://picsum.photos/seed/billie-eilish/400/600', 'https://www.instagram.com/billieeilish/', 'https://twitter.com/billieeilish');
 
   INSERT INTO eras (celebrity_id, name, description, progress, is_current)
   VALUES (billie_id, 'HIT ME HARD AND SOFT', 'Return to her roots but evolved. Soft vocals, hard beats, unapologetic authenticity.', 45, true);
@@ -255,8 +261,298 @@ BEGIN
   (billie_id, 'LABOR PRACTICES', '👷', 'High standards for tour crew treatment and fair pay.', 90, 2),
   (billie_id, 'PHILANTHROPY', '💎', 'Founding member of Support + Feed to combat food insecurity and climate change.', 95, 3);
 
-  INSERT INTO shop_items (celebrity_id, name, price, emoji, gradient, sort_order) VALUES
-  (billie_id, 'Oversized Anime Tee', '$45.00', '👕', 'linear-gradient(135deg, #152a28, #051a18)', 1),
-  (billie_id, 'Chunky Silver Rings', '$85.00', '💍', 'linear-gradient(135deg, #2a2815, #1a1805)', 2);
+  INSERT INTO shop_items (celebrity_id, name, price, emoji, gradient, image_url, product_url, sort_order) VALUES
+  (billie_id, 'Oversized Anime Tee', '$45.00', '👕', 'linear-gradient(135deg, #152a28, #051a18)', 'https://picsum.photos/seed/billie-tee/300/300', 'https://www.blohsh.com/', 1),
+  (billie_id, 'Chunky Silver Rings', '$85.00', '💍', 'linear-gradient(135deg, #2a2815, #1a1805)', 'https://picsum.photos/seed/billie-rings/300/300', 'https://www.etsy.com/', 2);
+
+END $$;
+
+-------------------------------------------------------------------------------
+-- 4. MET GALA ATTENDEES (real celebrities who have attended since the start)
+-------------------------------------------------------------------------------
+
+DO $$
+DECLARE
+  u UUID;
+BEGIN
+  -- Rihanna (co-chair 2018, iconic looks)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'rihanna', 'Rihanna', 1988, '💄', ARRAY['Singer', 'Fenty', 'Met Gala', 'Fashion Icon'], 9.7, 'Pisces', 'Scorpio', 'Leo', 'https://picsum.photos/seed/rihanna/400/600', 'https://www.instagram.com/rihanna/', 'https://twitter.com/rihanna');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'FENTY EMPIRE', 'Billionaire mogul, Savage x Fenty, and the Met Gala papal look that broke the internet.', 95, true);
+
+  -- Beyoncé (honorary chair 2013, multiple appearances)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'beyonce', 'Beyoncé', 1981, '🐝', ARRAY['Singer', 'Met Gala', 'Icon'], 9.9, 'Virgo', 'Capricorn', 'Gemini', 'https://picsum.photos/seed/beyonce/400/600', 'https://www.instagram.com/beyonce/', 'https://twitter.com/Beyonce');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'RENAISSANCE', 'Cowboy Carter, world tours, and undisputed queen of the Met red carpet.', 90, true);
+
+  -- Lady Gaga (co-chair 2019 Camp theme)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'lady-gaga', 'Lady Gaga', 1986, '👠', ARRAY['Singer', 'Actress', 'Met Gala', 'Camp'], 9.5, 'Aries', 'Cancer', 'Sagittarius', 'https://picsum.photos/seed/lady-gaga/400/600', 'https://www.instagram.com/ladygaga/', 'https://twitter.com/ladygaga');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'CHROMATICA TO JOKER', 'Four outfit changes on the 2019 carpet. Need we say more?', 88, true);
+
+  -- Anna Wintour (chair since 1995)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'anna-wintour', 'Anna Wintour', 1949, '🕶️', ARRAY['Vogue', 'Met Gala', 'Fashion'], 9.8, 'Scorpio', 'Capricorn', 'Leo', 'https://picsum.photos/seed/anna-wintour/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'EDITOR-IN-CHIEF', 'The woman who made the Met Gala fashion''s biggest night. Chair since 1995.', 100, true);
+
+  -- Cher (early Met Gala attendee, 1970s–80s)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'cher', 'Cher', 1946, '✨', ARRAY['Singer', 'Actress', 'Met Gala', 'Legend'], 9.6, 'Taurus', 'Leo', 'Leo', 'https://picsum.photos/seed/cher/400/600', 'https://www.instagram.com/cher/', 'https://twitter.com/cher');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'ETERNAL ICON', 'From Sonny & Cher to the Met Gala since the Diana Vreeland era. Timeless.', 98, true);
+
+  -- Diana Ross (Met Gala attendee 1970s)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'diana-ross', 'Diana Ross', 1944, '🌟', ARRAY['Singer', 'Met Gala', 'Legend'], 9.7, 'Pisces', 'Libra', 'Leo', 'https://picsum.photos/seed/diana-ross/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'SUPREME', 'Motown royalty and Met Gala guest since the Vreeland years.', 92, true);
+
+  -- Madonna (Met Gala attendee)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'madonna', 'Madonna', 1958, '🔥', ARRAY['Singer', 'Met Gala', 'Icon'], 9.5, 'Leo', 'Aquarius', 'Gemini', 'https://picsum.photos/seed/madonna/400/600', 'https://www.instagram.com/madonna/', 'https://twitter.com/Madonna');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'REINVENTION', 'Queen of the Met red carpet and pop culture since the ''80s.', 90, true);
+
+  -- Blake Lively (co-chair 2022)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'blake-lively', 'Blake Lively', 1987, '👗', ARRAY['Actress', 'Met Gala', 'Fashion Icon'], 9.4, 'Virgo', 'Pisces', 'Libra', 'https://picsum.photos/seed/blake-lively/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'GILDED GLAMOUR', 'Co-chaired 2022 Met Gala. That copper dress lives in our minds rent-free.', 88, true);
+
+  -- Taylor Swift (co-chair energy, multiple appearances)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'taylor-swift', 'Taylor Swift', 1989, '🐍', ARRAY['Singer', 'Met Gala', 'Fashion'], 9.6, 'Sagittarius', 'Cancer', 'Sagittarius', 'https://picsum.photos/seed/taylor-swift/400/600', 'https://www.instagram.com/taylorswift/', 'https://twitter.com/taylorswift13');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'THE ERAS TOUR', 'From country to Met Gala regular. Manus x Machina 2016 and beyond.', 95, true);
+
+  -- Jennifer Lawrence (co-chair 2015 China theme)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'jennifer-lawrence', 'Jennifer Lawrence', 1990, '🏹', ARRAY['Actress', 'Met Gala', 'Oscar Winner'], 9.3, 'Leo', 'Aquarius', 'Taurus', 'https://picsum.photos/seed/jennifer-lawrence/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'RED SPARROW TO NO HARD FEELINGS', 'Co-chaired Met Gala 2015. That red Dior is iconic.', 85, true);
+
+  -- Harry Styles (co-chair 2019 Camp)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'harry-styles', 'Harry Styles', 1994, '🎀', ARRAY['Singer', 'Met Gala', 'Fashion'], 9.5, 'Aquarius', 'Gemini', 'Libra', 'https://picsum.photos/seed/harry-styles/400/600', 'https://www.instagram.com/harrystyles/', 'https://twitter.com/Harry_Styles');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'HARRY''S HOUSE', 'Gucci gown at Camp Met Gala 2019. Gender-fluid fashion king.', 90, true);
+
+  -- Kate Moss (co-chair 2009 Model as Muse)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'kate-moss', 'Kate Moss', 1974, '📸', ARRAY['Model', 'Met Gala', 'Icon'], 9.6, 'Capricorn', 'Scorpio', 'Virgo', 'https://picsum.photos/seed/kate-moss/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'SUPERMODEL', 'Co-chaired 2009 Met Gala. The Model as Muse.', 88, true);
+
+  -- Naomi Campbell (Met Gala regular)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'naomi-campbell', 'Naomi Campbell', 1970, '👑', ARRAY['Model', 'Met Gala', 'Legend'], 9.7, 'Taurus', 'Capricorn', 'Leo', 'https://picsum.photos/seed/naomi-campbell/400/600', 'https://www.instagram.com/naomi/', NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'LEGEND', 'Walked the Met carpet for decades. Unmatched presence.', 95, true);
+
+  -- Kim Kardashian (Met Gala 2022 Marilyn dress)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'kim-kardashian', 'Kim Kardashian', 1980, '💎', ARRAY['Reality TV', 'Met Gala', 'Entrepreneur'], 9.2, 'Libra', 'Pisces', 'Cancer', 'https://picsum.photos/seed/kim-kardashian/400/600', 'https://www.instagram.com/kimkardashian/', 'https://twitter.com/KimKardashian');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'SKIMS & MET', 'Wore Marilyn Monroe''s 1962 dress to the 2022 Gilded Glamour Met Gala.', 82, true);
+
+  -- Kylie Jenner (Met Gala regular, bathroom selfie tradition)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'kylie-jenner', 'Kylie Jenner', 1997, '💋', ARRAY['Reality TV', 'Met Gala', 'Kylie Cosmetics'], 9.0, 'Leo', 'Sagittarius', 'Libra', 'https://picsum.photos/seed/kylie-jenner/400/600', 'https://www.instagram.com/kyliejenner/', 'https://twitter.com/Kyliejenner');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'BEAUTY MOGUL', 'Part of the iconic Met bathroom selfie crew with Billie and Dakota.', 85, true);
+
+  -- Jennifer Lopez (co-chair 2024)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'jennifer-lopez', 'Jennifer Lopez', 1969, '💃', ARRAY['Singer', 'Actress', 'Met Gala'], 9.4, 'Leo', 'Cancer', 'Taurus', 'https://picsum.photos/seed/jennifer-lopez/400/600', 'https://www.instagram.com/jlo/', 'https://twitter.com/JLo');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'THIS IS ME... NOW', 'Co-chaired 2024 Met Gala. Sleeping Beauties: Reawakening Fashion.', 88, true);
+
+  -- Dua Lipa (co-chair 2023 Karl Lagerfeld)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'dua-lipa', 'Dua Lipa', 1995, '🦋', ARRAY['Singer', 'Met Gala', 'Fashion'], 9.3, 'Leo', 'Scorpio', 'Gemini', 'https://picsum.photos/seed/dua-lipa/400/600', 'https://www.instagram.com/dualipa/', 'https://twitter.com/dualipa');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'RADICAL OPTIMISM', 'Co-chaired 2023 Met Gala. Karl Lagerfeld: A Line of Beauty.', 87, true);
+
+  -- Bad Bunny (co-chair 2024)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'bad-bunny', 'Bad Bunny', 1994, '🐰', ARRAY['Singer', 'Met Gala', 'Reggaeton'], 9.4, 'Pisces', 'Aries', 'Leo', 'https://picsum.photos/seed/bad-bunny/400/600', 'https://www.instagram.com/badboybunny/', 'https://twitter.com/sanbenito');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'UN VERANO SIN TI', 'Co-chaired 2024 Met Gala. Garden of Time theme.', 90, true);
+
+  -- Priyanka Chopra (Met Gala, Bollywood crossover)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'priyanka-chopra', 'Priyanka Chopra', 1982, '✨', ARRAY['Actress', 'Met Gala', 'Bollywood'], 9.2, 'Cancer', 'Libra', 'Sagittarius', 'https://picsum.photos/seed/priyanka-chopra/400/600', 'https://www.instagram.com/priyankachopra/', 'https://twitter.com/priyankachopra');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'CITIZEN OF THE WORLD', 'Bollywood to Hollywood to the Met steps. Multiple appearances.', 86, true);
+
+  -- Deepika Padukone (Met Gala attendee)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'deepika-padukone', 'Deepika Padukone', 1986, '🌺', ARRAY['Actress', 'Met Gala', 'Bollywood'], 9.1, 'Capricorn', 'Pisces', 'Virgo', 'https://picsum.photos/seed/deepika-padukone/400/600', 'https://www.instagram.com/deepikapadukone/', NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'GLOBAL STAR', 'Indian cinema icon and Met Gala red carpet regular.', 84, true);
+
+  -- Billy Porter (Met Gala 2019 angel, iconic looks)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'billy-porter', 'Billy Porter', 1969, '👼', ARRAY['Actor', 'Met Gala', 'Fashion'], 9.6, 'Virgo', 'Leo', 'Gemini', 'https://picsum.photos/seed/billy-porter/400/600', 'https://www.instagram.com/thebillyporter/', 'https://twitter.com/thebillyporter');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'POSE TO MET', 'That golden winged entrance at Camp 2019. Fashion has no gender.', 92, true);
+
+  -- Oprah Winfrey (co-chair 2010 American Woman)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'oprah-winfrey', 'Oprah Winfrey', 1954, '🎙️', ARRAY['Media', 'Met Gala', 'Philanthropist'], 9.8, 'Aquarius', 'Capricorn', 'Sagittarius', 'https://picsum.photos/seed/oprah-winfrey/400/600', 'https://www.instagram.com/oprah/', 'https://twitter.com/Oprah');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'OWN & MET', 'Co-chaired 2010 Met Gala. American Woman: Fashioning a National Identity.', 98, true);
+
+  -- Nicole Kidman (co-chair 2003, 2005, 2026)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'nicole-kidman', 'Nicole Kidman', 1967, '🎬', ARRAY['Actress', 'Met Gala', 'Oscar Winner'], 9.3, 'Gemini', 'Pisces', 'Libra', 'https://picsum.photos/seed/nicole-kidman/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'HOLLYWOOD ROYALTY', 'Multiple Met Gala co-chair appearances. Goddess theme 2003.', 90, true);
+
+  -- Cate Blanchett (co-chair 2007 Poiret)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'cate-blanchett', 'Cate Blanchett', 1969, '🏛️', ARRAY['Actress', 'Met Gala', 'Oscar Winner'], 9.4, 'Taurus', 'Aquarius', 'Scorpio', 'https://picsum.photos/seed/cate-blanchett/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'TÁR TO MET', 'Co-chaired 2007 Met Gala. Poiret: King of Fashion.', 88, true);
+
+  -- Sarah Jessica Parker (Met Gala regular, 2014 co-chair)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'sarah-jessica-parker', 'Sarah Jessica Parker', 1965, '👠', ARRAY['Actress', 'Met Gala', 'SATC'], 9.2, 'Aries', 'Libra', 'Cancer', 'https://picsum.photos/seed/sarah-jessica-parker/400/600', 'https://www.instagram.com/sjp/', NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'CARRIE BRADSHAW', 'Charles James 2014 co-chair. Head-to-toe fashion risk-taker.', 85, true);
+
+  -- Amal Clooney (co-chair 2018 Heavenly Bodies)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'amal-clooney', 'Amal Clooney', 1978, '⚖️', ARRAY['Lawyer', 'Met Gala', 'Human Rights'], 9.5, 'Pisces', 'Virgo', 'Capricorn', 'https://picsum.photos/seed/amal-clooney/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'HUMAN RIGHTS & HAUTE COUTURE', 'Co-chaired 2018 Met Gala. Heavenly Bodies theme.', 90, true);
+
+  -- Serena Williams (co-chair 2019 Camp)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'serena-williams', 'Serena Williams', 1981, '🎾', ARRAY['Tennis', 'Met Gala', 'Legend'], 9.7, 'Libra', 'Sagittarius', 'Aries', 'https://picsum.photos/seed/serena-williams/400/600', 'https://www.instagram.com/serenawilliams/', 'https://twitter.com/serenawilliams');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'GOAT', '23 Grand Slams and Camp Met Gala 2019 co-chair. Icon.', 95, true);
+
+  -- Gisele Bündchen (co-chair 2017)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'gisele-bundchen', 'Gisele Bündchen', 1980, '🌿', ARRAY['Model', 'Met Gala', 'Sustainability'], 9.4, 'Cancer', 'Taurus', 'Leo', 'https://picsum.photos/seed/gisele-bundchen/400/600', 'https://www.instagram.com/gisele/', NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'SUPERMODEL & ACTIVIST', 'Co-chaired 2017 Met Gala. Rei Kawakubo/Comme des Garçons.', 88, true);
+
+  -- Pharrell Williams (co-chair 2017, 2025)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'pharrell-williams', 'Pharrell Williams', 1973, '🎩', ARRAY['Producer', 'Designer', 'Met Gala'], 9.5, 'Aries', 'Gemini', 'Libra', 'https://picsum.photos/seed/pharrell-williams/400/600', 'https://www.instagram.com/pharrell/', 'https://twitter.com/Pharrell');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'LOUIS VUITTON & MET', 'Co-chaired 2017 and 2025 Met Galas. Superfine: Tailoring Black Style.', 92, true);
+
+  -- ASAP Rocky (co-chair 2025)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'asap-rocky', 'A$AP Rocky', 1988, '🌹', ARRAY['Rapper', 'Met Gala', 'Fashion'], 9.2, 'Libra', 'Scorpio', 'Aquarius', 'https://picsum.photos/seed/asap-rocky/400/600', 'https://www.instagram.com/asaprocky/', 'https://twitter.com/asvpxrocky');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'RIHANNA & MET', 'Co-chaired 2025 Met Gala. Tailoring Black Style.', 86, true);
+
+  -- Lewis Hamilton (co-chair 2025)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'lewis-hamilton', 'Lewis Hamilton', 1985, '🏎️', ARRAY['F1', 'Met Gala', 'Fashion'], 9.3, 'Capricorn', 'Leo', 'Libra', 'https://picsum.photos/seed/lewis-hamilton/400/600', 'https://www.instagram.com/lewishamilton/', 'https://twitter.com/LewisHamilton');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'F1 LEGEND & STYLE', 'Co-chaired 2025 Met Gala. Seven-time F1 world champion.', 90, true);
+
+  -- Colman Domingo (co-chair 2025)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'colman-domingo', 'Colman Domingo', 1969, '🎭', ARRAY['Actor', 'Met Gala', 'Rustin'], 9.1, 'Sagittarius', 'Cancer', 'Leo', 'https://picsum.photos/seed/colman-domingo/400/600', 'https://www.instagram.com/colmandomingo/', 'https://twitter.com/colmandomingo');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'EUPHORIA TO MET', 'Co-chaired 2025 Met Gala. Superfine: Tailoring Black Style.', 85, true);
+
+  -- Elton John (Met Gala attendee since 1970s)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'elton-john', 'Elton John', 1947, '🎹', ARRAY['Singer', 'Met Gala', 'Legend'], 9.6, 'Aries', 'Pisces', 'Gemini', 'https://picsum.photos/seed/elton-john/400/600', 'https://www.instagram.com/eltonjohn/', 'https://twitter.com/eltonofficial');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'FAREWELL YELLOW BRICK ROAD', 'Met Gala guest since the Diana Vreeland era. Glasses and glamour.', 94, true);
+
+  -- Liza Minnelli (Met Gala 1970s)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'liza-minnelli', 'Liza Minnelli', 1946, '🎤', ARRAY['Actress', 'Singer', 'Met Gala'], 9.5, 'Pisces', 'Leo', 'Leo', 'https://picsum.photos/seed/liza-minnelli/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'CABARET LEGEND', 'Broadway and Met Gala icon. Vreeland-era regular.', 90, true);
+
+  -- Bianca Jagger (Met Gala 1970s)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'bianca-jagger', 'Bianca Jagger', 1945, '🕴️', ARRAY['Activist', 'Met Gala', 'Style Icon'], 9.4, 'Taurus', 'Aquarius', 'Libra', 'https://picsum.photos/seed/bianca-jagger/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'STUDIO 54 ERA', 'That white suit. Met Gala and disco royalty.', 88, true);
+
+  -- Barbra Streisand (Met Gala attendee)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'barbra-streisand', 'Barbra Streisand', 1942, '🎭', ARRAY['Singer', 'Actress', 'Met Gala'], 9.6, 'Taurus', 'Capricorn', 'Virgo', 'https://picsum.photos/seed/barbra-streisand/400/600', 'https://www.instagram.com/barbrastreisand/', 'https://twitter.com/BarbraStreisand');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'LEGEND', 'EGOT and Met Gala guest since the ''70s.', 95, true);
+
+  -- Elizabeth Taylor (Met Gala 1970s–80s)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'elizabeth-taylor', 'Elizabeth Taylor', 1932, '💜', ARRAY['Actress', 'Met Gala', 'Legend'], 9.8, 'Pisces', 'Scorpio', 'Sagittarius', 'https://picsum.photos/seed/elizabeth-taylor/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'HOLLYWOOD ROYALTY', 'Diamond-loving icon. Met Gala in the Vreeland years.', 98, true);
+
+  -- Andy Warhol (Met Gala attendee)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'andy-warhol', 'Andy Warhol', 1928, '🍅', ARRAY['Artist', 'Met Gala', 'Pop Art'], 9.7, 'Leo', 'Aquarius', 'Gemini', 'https://picsum.photos/seed/andy-warhol/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'FACTORY ERA', 'Artist and Met Gala guest. Blurred the line between art and fashion.', 95, true);
+
+  -- Dakota Johnson (Met bathroom selfie crew)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'dakota-johnson', 'Dakota Johnson', 1989, '🦋', ARRAY['Actress', 'Met Gala', 'Fifty Shades'], 9.0, 'Libra', 'Pisces', 'Cancer', 'https://picsum.photos/seed/dakota-johnson/400/600', NULL, NULL);
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'MET BATHROOM SELFIE', 'Part of the viral annual Met bathroom selfie with Billie and Kylie.', 82, true);
+
+  -- Shah Rukh Khan (first male Bollywood star at Met Gala 2025)
+  u := gen_random_uuid();
+  INSERT INTO celebrities (id, slug, name, birth_year, emoji, tags, vibe_score, sun_sign, moon_sign, rising_sign, image_url, instagram_url, twitter_url)
+  VALUES (u, 'shah-rukh-khan', 'Shah Rukh Khan', 1965, '🌟', ARRAY['Actor', 'Met Gala', 'Bollywood'], 9.6, 'Scorpio', 'Leo', 'Libra', 'https://picsum.photos/seed/shah-rukh-khan/400/600', 'https://www.instagram.com/iamsrk/', 'https://twitter.com/iamsrk');
+  INSERT INTO eras (celebrity_id, name, description, progress, is_current)
+  VALUES (u, 'KING KHAN', 'First male Bollywood star to ascend the Met steps. 2025 Met Gala.', 90, true);
 
 END $$;

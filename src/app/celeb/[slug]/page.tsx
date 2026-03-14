@@ -75,7 +75,13 @@ export default async function CelebPage({ params }: PageProps) {
           `
         }} />
         <div className="relative z-10">
-          <div className="text-6xl mb-4">{profile.celeb.emoji || '✨'}</div>
+          {profile.celeb.image_url ? (
+            <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-2 border-[var(--accent-teal)] shrink-0">
+              <img src={profile.celeb.image_url} alt={profile.celeb.name} className="w-full h-full object-cover" />
+            </div>
+          ) : (
+            <div className="text-6xl mb-4">{profile.celeb.emoji || '✨'}</div>
+          )}
           <h1 className="font-[family-name:var(--font-display)] leading-[0.9] mb-3"
             style={{ fontSize: 'clamp(3rem, 10vw, 8rem)' }}>
             {profile.celeb.name.toUpperCase()}
@@ -85,9 +91,23 @@ export default async function CelebPage({ params }: PageProps) {
               <span key={tag} className="text-[0.75rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1 rounded-md">{tag}</span>
             ))}
           </div>
-          <div className="font-[family-name:var(--font-heading)] text-3xl text-[var(--accent-teal)]">
+          <div className="font-[family-name:var(--font-heading)] text-3xl text-[var(--accent-teal)] mb-4">
             {profile.celeb.vibe_score} ✦
           </div>
+          {(profile.celeb.instagram_url || profile.celeb.twitter_url) && (
+            <div className="flex gap-4 justify-center flex-wrap">
+              {profile.celeb.instagram_url && (
+                <a href={profile.celeb.instagram_url} target="_blank" rel="noopener noreferrer" className="text-[0.75rem] font-bold tracking-wider uppercase text-[var(--muted)] hover:text-[var(--accent-pink)] transition-colors no-underline">
+                  Instagram →
+                </a>
+              )}
+              {profile.celeb.twitter_url && (
+                <a href={profile.celeb.twitter_url} target="_blank" rel="noopener noreferrer" className="text-[0.75rem] font-bold tracking-wider uppercase text-[var(--muted)] hover:text-[var(--accent-teal)] transition-colors no-underline">
+                  X (Twitter) →
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

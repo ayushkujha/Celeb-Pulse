@@ -2,15 +2,17 @@ export interface Celebrity {
   id: string;
   slug: string;
   name: string;
-  birth_year: number;
+  birth_year?: number;
   tags: string[];
   vibe_score: number;
   image_url?: string;
+  instagram_url?: string;
+  twitter_url?: string;
   sun_sign: string;
   moon_sign: string;
   rising_sign: string;
   emoji: string;
-  gradient: string;
+  gradient?: string;
 }
 
 export interface Era {
@@ -77,6 +79,8 @@ export interface ShopItem {
   price: string;
   emoji: string;
   gradient: string;
+  image_url?: string;
+  product_url?: string;
 }
 
 export interface CelebStats {

@@ -10,6 +10,7 @@ interface SearchResult {
   name: string;
   emoji: string;
   tags: string[];
+  image_url?: string | null;
 }
 
 export default function SearchBar() {
@@ -28,7 +29,7 @@ export default function SearchBar() {
     const timer = setTimeout(async () => {
       const { data, error } = await supabase
         .from('celebrities')
-        .select('slug, name, emoji, tags')
+        .select('slug, name, emoji, tags, image_url')
         .ilike('name', `%${query}%`)
         .limit(5);
 
@@ -77,9 +78,9 @@ export default function SearchBar() {
               className="flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors duration-150 no-underline text-[var(--foreground)] hover:bg-white/[.04]"
               style={{ borderBottom: '1px solid var(--border)' }}
               onClick={() => setVisible(false)}>
-              <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg shrink-0"
+              <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg shrink-0 overflow-hidden"
                 style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.2), rgba(0,245,196,0.2))' }}>
-                {c.emoji || '✨'}
+                {c.image_url ? <img src={c.image_url} alt="" className="w-full h-full object-cover" /> : (c.emoji || '✨')}
               </div>
               <div>
                 <div className="font-semibold text-[0.9rem] text-white">{c.name}</div>

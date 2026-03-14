@@ -11,18 +11,33 @@ export default function ShopTheLook({ items }: Props) {
         Shop The Look
       </div>
       <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none' }}>
-        {items.map(item => (
-          <div key={item.id} className="flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer transition-transform duration-200 hover:scale-[1.04]"
-            style={{ width: 200, background: 'var(--surface)', border: '1px solid var(--border)' }}>
-            <div className="h-[160px] flex items-center justify-center text-[2.5rem]" style={{ background: item.gradient }}>
-              {item.emoji}
+        {items.map(item => {
+          const cardContent = (
+            <>
+              <div className="h-[160px] flex items-center justify-center text-[2.5rem] overflow-hidden" style={{ background: item.gradient }}>
+                {item.image_url ? (
+                  <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
+                ) : (
+                  <span>{item.emoji}</span>
+                )}
+              </div>
+              <div className="px-[14px] py-3">
+                <div className="text-[0.85rem] font-semibold mb-[2px]">{item.name}</div>
+                <div className="text-[0.8rem] text-[var(--accent-teal)] font-bold">{item.price}</div>
+              </div>
+            </>
+          );
+          const style = { width: 200, background: 'var(--surface)', border: '1px solid var(--border)' };
+          return item.product_url ? (
+            <a key={item.id} href={item.product_url} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer transition-transform duration-200 hover:scale-[1.04] no-underline text-[var(--foreground)]" style={style}>
+              {cardContent}
+            </a>
+          ) : (
+            <div key={item.id} className="flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer transition-transform duration-200 hover:scale-[1.04]" style={style}>
+              {cardContent}
             </div>
-            <div className="px-[14px] py-3">
-              <div className="text-[0.85rem] font-semibold mb-[2px]">{item.name}</div>
-              <div className="text-[0.8rem] text-[var(--accent-teal)] font-bold">{item.price}</div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
