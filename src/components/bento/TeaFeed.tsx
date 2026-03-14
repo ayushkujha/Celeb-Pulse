@@ -6,7 +6,7 @@ interface Props { items: TeaItem[]; }
 
 export default function TeaFeed({ items }: Props) {
   return (
-    <div className="md:col-span-8 p-7 rounded-[20px] transition-all duration-300 overflow-hidden" 
+    <div className="w-full p-7 rounded-[20px] transition-all duration-300 overflow-hidden" 
     style={{
       background: 'linear-gradient(145deg, #150a1a, #0e0a18)',
       border: '1px solid rgba(168,85,247,0.2)',

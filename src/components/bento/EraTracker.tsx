@@ -6,7 +6,7 @@ interface Props { era: Era; }
 
 export default function EraTracker({ era }: Props) {
   return (
-    <div className="md:col-span-4 p-7 rounded-[20px] transition-all duration-300"
+    <div className="w-full p-7 rounded-[20px] transition-all duration-300"
     style={{
       background: 'linear-gradient(145deg, #1a1408, #14100a)',
       border: '1px solid rgba(255,214,0,0.2)',

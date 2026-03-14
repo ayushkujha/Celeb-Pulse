@@ -27,6 +27,27 @@ export const metadata: Metadata = {
   description:
     "Your obsessive encyclopedia for celebrity lore, aesthetics, and the tea. Built for stans. No cap.",
   keywords: ["celebrity", "pop culture", "gossip", "entertainment", "trending"],
+  openGraph: {
+    title: "CelebPulse ⚡",
+    description: "Your obsessive encyclopedia for celebrity lore, aesthetics, and the tea.",
+    url: 'https://celebpulse.com',
+    siteName: 'CelebPulse',
+    images: [
+      {
+        url: 'https://celebpulse.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'CelebPulse Open Graph Image',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CelebPulse ⚡',
+    description: 'Your obsessive encyclopedia for celebrity lore and the tea.',
+  },
 };
 
 export default function RootLayout({

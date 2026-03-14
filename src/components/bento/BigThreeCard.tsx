@@ -12,7 +12,7 @@ export default function BigThreeCard({ celeb }: Props) {
   ];
 
   return (
-    <div className="md:col-span-4 p-7 rounded-[20px] transition-all duration-300"
+    <div className="w-full p-7 rounded-[20px] transition-all duration-300"
     style={{
       background: 'linear-gradient(145deg, #0a1a12, #0f1520)',
       border: '1px solid rgba(0,245,196,0.2)',

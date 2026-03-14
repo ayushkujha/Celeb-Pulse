@@ -1,8 +1,8 @@
 import { supabase } from '@/lib/supabase';
-import { CelebrityProfile, CelebStats } from '@/lib/types';
+import { CelebProfile, CelebStats } from '@/lib/types';
 import { notFound } from 'next/navigation';
 
-export async function getCelebrityProfile(slug: string): Promise<CelebrityProfile | null> {
+export async function getCelebrityProfile(slug: string): Promise<CelebProfile | null> {
   // 1. Fetch main celebrity data
   const { data: celeb, error: celebError } = await supabase
     .from('celebrities')

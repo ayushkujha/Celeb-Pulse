@@ -10,7 +10,7 @@ interface Props {
 
 export default function CelebCard({ celeb, era }: Props) {
   return (
-    <Link href={`/celeb/${celeb.slug}`} className="md:col-span-8 md:row-span-2 relative flex flex-col justify-end overflow-hidden no-underline text-[var(--foreground)]"
+    <Link href={`/celeb/${celeb.slug}`} className="relative w-full flex flex-col justify-end overflow-hidden no-underline text-[var(--foreground)]"
       style={{
         background: 'linear-gradient(145deg, #1a0a14, #120a1c)',
         border: '1px solid rgba(255,45,120,0.2)',

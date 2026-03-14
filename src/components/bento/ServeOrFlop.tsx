@@ -33,7 +33,7 @@ export default function ServeOrFlop({ poll }: Props) {
   };
 
   return (
-    <div className="text-center md:col-span-4 p-7 rounded-[20px] transition-all duration-300 overflow-hidden" 
+    <div className="text-center w-full p-7 rounded-[20px] transition-all duration-300 overflow-hidden" 
     style={{
       background: 'linear-gradient(145deg, #14080f, #180d0d)',
       border: '1px solid rgba(255,45,120,0.2)',

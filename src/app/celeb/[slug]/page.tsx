@@ -25,6 +25,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${profile.celeb.name} | CelebPulse ⚡`,
     description: `${profile.celeb.name} — ${profile.currentEra.name} Era. Lore, aesthetics, and the tea. Vibe score: ${profile.celeb.vibe_score}`,
+    openGraph: {
+      title: `${profile.celeb.name} | CelebPulse`,
+      description: `Explore the ${profile.currentEra.name} era of ${profile.celeb.name}. Discover their dating history, big three signs, and community vibe score.`,
+      url: `https://celebpulse.com/celeb/${slug}`,
+      siteName: 'CelebPulse',
+      images: [
+        {
+          url: 'https://celebpulse.com/og-image.jpg',
+          width: 1200,
+          height: 630,
+        },
+      ],
+      locale: 'en_US',
+      type: 'profile',
+    },
   };
 }
 
@@ -36,8 +51,20 @@ export default async function CelebPage({ params }: PageProps) {
 
   if (!profile) notFound();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: profile.celeb.name,
+    description: `Explore the ${profile.currentEra.name} era of ${profile.celeb.name}.`,
+    url: `https://celebpulse.com/celeb/${profile.celeb.slug}`,
+  };
+
   return (
     <main className="pt-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Celeb Hero Banner */}
       <div className="relative py-16 px-6 text-center overflow-hidden">
         <div className="absolute inset-0" style={{
